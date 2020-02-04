@@ -3,24 +3,25 @@ public class Controller {
     public static void main(String[] args) {
         Service service = new Service();
 
-        Student alfred = service.addStudent("Alfred", 1996, true);
-        Student masha = service.addStudent("Masha", 1997, false);
+        Student alfred = service.addStudent("Alfred", "01-09-2019", Gender.MALE);
+        Student masha = service.addStudent("Masha", "01-09-2018", Gender.FEMALE);
 
-        Mentor pyotrIvanovich = service.addMentor("Pyotr Ivanovich", 1974, true);
+        Student evlampy = service.addStudent("Evlampy", "01-08-2019", Gender.MALE);
+
+        Mentor ivanIvanovich = service.addMentor("Ivan Ivanovich",  Gender.MALE);
+        Mentor pyotrIvanovich = service.addMentor("Pyotr Ivanovich", Gender.MALE);
+
+
+        masha.addCat(new Pussy(3, "Smokey"));
 
         service.addStudentToMentor(pyotrIvanovich, alfred);
         service.addStudentToMentor(pyotrIvanovich, masha);
 
-        service.addMark(pyotrIvanovich, alfred, 10);
-        service.addMark(pyotrIvanovich, alfred, 8);
-        service.addMark(pyotrIvanovich, alfred, 10);
         service.addMark(pyotrIvanovich, alfred, 8);
 
-        service.addMark(pyotrIvanovich, masha, 12);
-        service.addMark(pyotrIvanovich, masha, 12);
-        service.addMark(pyotrIvanovich, masha, 4);
+        service.addMark(pyotrIvanovich, masha, 10);
 
 
-        System.out.println(service.countAverage(pyotrIvanovich));
+        System.out.println(service.getAllMentors());
     }
 }

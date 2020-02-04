@@ -1,9 +1,12 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Person {
 
     private int id;
     private String name;
-    private boolean isMale;
-    private int year;
+    private Gender gender;
+    private LocalDate startDate;
 
     static int counter = 0;
 
@@ -11,11 +14,13 @@ public class Person {
         this.id = ++counter;
     }
 
-    Person(String name, boolean isMale, int year) {
+    Person(String name, Gender gender, String startDate) {
         this();
         this.name = name;
-        this.isMale = isMale;
-        this.year = year;
+        this.gender = gender;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        this.startDate = LocalDate.parse(startDate,formatter);
     }
 
     public String getName() {
@@ -30,27 +35,35 @@ public class Person {
 
     }
 
-    public boolean isMale() {
-        return isMale;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setMale(boolean male) {
-        isMale = male;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
-    public int getYear() {
-        return year;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setYear(int year) {
-        if(year < 1900 || year > 2019) {
-            throw new IllegalArgumentException("Year should be in range [1900; 2019]");
-        }
+    public void setStartDate(String startDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        this.year = year;
+        this.startDate = LocalDate.parse(startDate,formatter);
     }
 
     public static void print() {
         System.out.println("static");
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id = " + id +
+                ", name = '" + name + '\'' +
+                ", gender = " + gender +
+                ", startDate = " + startDate +
+                '}';
     }
 }

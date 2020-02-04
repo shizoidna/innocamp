@@ -1,8 +1,13 @@
 import java.util.*;
 
-public class Mentor extends Person{
+public class Mentor extends Person implements Teachable{
 
    private Set<Student> students = new HashSet<>();
+   private Set<String> subjects = new HashSet<>();
+
+    Mentor(String name, Gender gender, String startDate) {
+        super(name, gender, startDate);
+    }
 
     public Set<Student> getStudents() {
         return students;
@@ -17,4 +22,8 @@ public class Mentor extends Person{
     }
 
 
+    @Override
+    public void know(String subject) {
+        this.subjects.add(subject);
+    }
 }

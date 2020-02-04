@@ -1,27 +1,23 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class Service {
 
-    public Student addStudent(String name, int year, boolean isMale) {
-
-        Student student = new Student();
-
-
-        student.setName(name);
-        student.setYear(year);
-        student.setMale(isMale);
-
-        return student;
+    public Student addStudent(String name, String startDate, Gender gender) {
+        return new Student(name, gender, startDate);
     }
 
-    public Mentor addMentor(String name, int year, boolean isMale) {
+    public Mentor addMentor(String name, Gender gender) {
+        Institute institute = Institute.getInstance();
 
         Mentor mentor = new Mentor();
 
         mentor.setName(name);
-        mentor.setYear(year);
-        mentor.setMale(isMale);
+        mentor.setGender(gender);
+
+        institute.getMentors().add(mentor);
 
         return mentor;
     }
@@ -53,7 +49,13 @@ public class Service {
             throw new IllegalArgumentException("Mentor " + mentor.getName() + " does not have student " + student.getName());
         }
 
-        student.getMarks().add(mark);
+        LocalDate currentDate = LocalDate.now();
+
+        if(student.getCat() != null) {
+            mark *= 1.2;
+        }
+
+        student.getMarks().put(currentDate, mark);
         return student;
     }
 
@@ -68,7 +70,7 @@ public class Service {
         Set<Student> allStudents = mentor.getStudents();
 
         for(Student student: allStudents){//for each mentor's student
-            List<Integer> studentMarks = student.getMarks();//get all student's marks
+            List<Integer> studentMarks = new ArrayList<>(student.getMarks().values());//get all student's marks
 
             for(Integer mark: studentMarks){
                 total += mark;//sum them up
@@ -77,6 +79,19 @@ public class Service {
             marksCounter += studentMarks.size();//remember the quantity of the marks
         }//continue with the next student
 
-        return Math.round(total/marksCounter*100)/100F;
+        float result;
+        try {
+            float midResult = total/marksCounter;
+            result = Math.round(midResult*100)/100F;
+        } catch (ArithmeticException e) {
+            throw new InstituteException("Cannot divide by zero", e);
+        }
+
+        return result;
+    }
+
+    public List<Mentor> getAllMentors() {
+        Institute institute = Institute.getInstance();
+        return institute.getMentors();
     }
 }

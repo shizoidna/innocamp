@@ -1,24 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class Student extends Person {
+public class Student extends Person implements Teachable {
 
-    private List<Integer> marks = new ArrayList<>();
+    private Map<LocalDate, Integer> marks = new HashMap<>();
+    private Pussy cat;
+    private Set<String> certificates = new HashSet<>();
 
-    Student() {
-
+    Student(String name, Gender gender, String startDate) {
+        super(name, gender, startDate);
     }
 
-    Student(String name, boolean isMale, int year) {
-        super(name, isMale, year);
-    }
-
-    public List<Integer> getMarks() {
+    public Map<LocalDate, Integer> getMarks() {
         return marks;
     }
 
-    public void setMarks(List<Integer> marks) {
+    public void setMarks(Map<LocalDate, Integer> marks) {
         this.marks = marks;
+    }
+
+    public void addCat(Pussy cat){
+        this.cat = cat;
+    }
+
+    public Pussy getCat() {
+        return cat;
+    }
+
+    public void setCat(Pussy cat) {
+        this.cat = cat;
+    }
+
+    @Override
+    public void know(String subject) {
+        certificates.add(subject);
     }
 }
 

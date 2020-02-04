@@ -4,9 +4,6 @@ public class Pussy {
 
     public static int id = 0;
 
-    {
-        id = 0;
-    }
 
     int age;
     String name;
