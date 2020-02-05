@@ -9,10 +9,10 @@ public class Service {
         return new Student(name, gender, startDate);
     }
 
-    public Mentor addMentor(String name, Gender gender) {
+    public Mentor addMentor(String name, Gender gender, String startDate) {
         Institute institute = Institute.getInstance();
 
-        Mentor mentor = new Mentor();
+        Mentor mentor = new Mentor(name, gender, startDate);
 
         mentor.setName(name);
         mentor.setGender(gender);
